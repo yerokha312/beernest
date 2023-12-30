@@ -1,8 +1,10 @@
 package com.neobis.yerokha.entity.beer;
 
+import com.neobis.yerokha.dao.DataTransferObject;
+
 import java.util.Objects;
 
-public final class Subtype {
+public final class Subtype implements DataTransferObject {
     private Long id;
     private Style style;
     private String name;

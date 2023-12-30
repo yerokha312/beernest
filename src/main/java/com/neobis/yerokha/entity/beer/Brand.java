@@ -1,8 +1,10 @@
 package com.neobis.yerokha.entity.beer;
 
+import com.neobis.yerokha.dao.DataTransferObject;
+
 import java.util.Objects;
 
-public class Brand {
+public class Brand implements DataTransferObject {
     private Long id;
     private String name;
 

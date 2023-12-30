@@ -1,22 +1,21 @@
 package com.neobis.yerokha.entity.beer;
 
 
+import com.neobis.yerokha.dao.DataTransferObject;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Beer {
+public class Beer implements DataTransferObject {
     private Long id;
     private String name;
     private Style style;
-    private String subtype;
-    private Brand brand;
     private Double alcohol;
     private Container container;
     private Integer size;
     private BigDecimal price;
     private String country;
-    private String description;
-    private Long availableStock;
+    private Integer stockAmount;
 
     public Beer() {
     }
@@ -43,22 +42,6 @@ public class Beer {
 
     public void setStyle(Style style) {
         this.style = style;
-    }
-
-    public String getSubtype() {
-        return subtype;
-    }
-
-    public void setSubtype(String subtype) {
-        this.subtype = subtype;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
     }
 
     public Double getAlcohol() {
@@ -101,20 +84,12 @@ public class Beer {
         this.country = country;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getStockAmount() {
+        return stockAmount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Long getAvailableStock() {
-        return availableStock;
-    }
-
-    public void setAvailableStock(Long availableStock) {
-        this.availableStock = availableStock;
+    public void setStockAmount(Integer stockAmount) {
+        this.stockAmount = stockAmount;
     }
 
     @Override
@@ -122,15 +97,13 @@ public class Beer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Beer beer = (Beer) o;
-        return Objects.equals(id, beer.id) && Objects.equals(name, beer.name) && style == beer.style &&
-                Objects.equals(subtype, beer.subtype) && Objects.equals(brand, beer.brand) &&
-                Objects.equals(alcohol, beer.alcohol) && container == beer.container &&
-                Objects.equals(size, beer.size) && Objects.equals(country, beer.country);
+        return Objects.equals(name, beer.name) && Objects.equals(alcohol, beer.alcohol) &&
+                container == beer.container && Objects.equals(size, beer.size) && Objects.equals(country, beer.country);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, style, subtype, brand, alcohol, container, size, country);
+        return Objects.hash(name, alcohol, container, size, country);
     }
 
     @Override
@@ -139,16 +112,12 @@ public class Beer {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", style=" + style +
-                ", subtype='" + subtype + '\'' +
-                ", brand=" + brand +
                 ", alcohol=" + alcohol +
                 ", container=" + container +
                 ", size=" + size +
                 ", price=" + price +
                 ", country='" + country + '\'' +
-                ", description='" + description + '\'' +
-                ", availableStock=" + availableStock +
+                ", stockAmount=" + stockAmount +
                 '}';
     }
-
 }
