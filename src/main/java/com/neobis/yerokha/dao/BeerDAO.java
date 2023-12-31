@@ -58,6 +58,12 @@ public class BeerDAO extends DataAccessObject<Beer> {
             }
             e.printStackTrace();
             throw new RuntimeException("Unable to create beer");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -73,6 +79,13 @@ public class BeerDAO extends DataAccessObject<Beer> {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Unable to find beer");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         return beer;
     }
@@ -90,6 +103,13 @@ public class BeerDAO extends DataAccessObject<Beer> {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Unable to find all beers");
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         return beerList;
     }
@@ -119,6 +139,13 @@ public class BeerDAO extends DataAccessObject<Beer> {
             }
             e.printStackTrace();
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         System.out.println("Rows affected: " + rowsAffected);
         return beer;
@@ -146,6 +173,13 @@ public class BeerDAO extends DataAccessObject<Beer> {
             }
             e.printStackTrace();
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
         }
         return rowsAffected;
     }
