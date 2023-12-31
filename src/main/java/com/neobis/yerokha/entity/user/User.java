@@ -1,11 +1,11 @@
-package com.neobis.yerokha.entity.beer;
+package com.neobis.yerokha.entity.user;
 
 import com.neobis.yerokha.dao.DataTransferObject;
 
 import java.sql.Date;
 import java.util.Objects;
 
-public class User implements DataTransferObject {
+public abstract class User implements DataTransferObject {
 
     private Long id;
     private String firstName;
@@ -91,8 +91,7 @@ public class User implements DataTransferObject {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
+        return  "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthDate=" + birthDate +

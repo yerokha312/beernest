@@ -21,10 +21,10 @@ public class JDBCExecutor {
             BeerDAO beerDAO = new BeerDAO(connection);
 
 //            createBeer(beerDAO);
-//            readBeerById(beerDAO);
+            readBeerById(beerDAO);
 //            readAllBear(beerDAO);
 //            updateBeerById(beerDAO);
-            deleteBeerById(beerDAO);
+//            deleteBeerById(beerDAO);
 
             connection.close();
         } catch (SQLException e) {
@@ -57,7 +57,7 @@ public class JDBCExecutor {
     }
 
     private static void readBeerById(BeerDAO beerDAO) {
-        long id = 1;
+        long id = 2;
 
         Beer beer = beerDAO.findById(id);
         System.out.println(beer);
