@@ -9,23 +9,6 @@ INSERT INTO styles (style_id, name)
 VALUES (1, 'ALE'),
        (2, 'LAGER');
 
-CREATE TABLE subtype
-(
-    subtype_id serial      NOT NULL,
-    style_id   int         NOT NULL,
-    name       varchar(50) NOT NULL UNIQUE,
-    PRIMARY KEY (subtype_id),
-    FOREIGN KEY (style_id)
-        REFERENCES styles (style_id)
-);
-
-CREATE TABLE brand
-(
-    brand_id bigserial NOT NULL,
-    name     varchar(50) DEFAULT NULL,
-    PRIMARY KEY (brand_id)
-);
-
 CREATE TABLE container
 (
     container_id serial      NOT NULL,
@@ -56,33 +39,27 @@ CREATE TABLE beer
     FOREIGN KEY (container_id)
         REFERENCES container (container_id)
 );
--- private Long id;
---     private String firstName;
---     private String lastName;
---     private Date birthDate;
---     private String email;
---     private String phoneNumber;
---     private String password;
+
 CREATE TABLE customer
 (
-    customer_id bigserial NOT NULL ,
-    first_name varchar(50) DEFAULT NULL,
-    last_name varchar(50) DEFAULT NULL,
-    dob date DEFAULT NULL,
-    email varchar(50) DEFAULT NULL,
+    customer_id  bigserial NOT NULL,
+    first_name   varchar(50) DEFAULT NULL,
+    last_name    varchar(50) DEFAULT NULL,
+    dob          date        DEFAULT NULL,
+    email        varchar(50) DEFAULT NULL,
     phone_number varchar(50) DEFAULT NULL,
-    password varchar(50) DEFAULT NULL,
+    password     varchar(50) DEFAULT NULL,
     PRIMARY KEY (customer_id)
 );
 
 CREATE TABLE employee
 (
-    employee_id bigserial NOT NULL ,
-    first_name varchar(50) DEFAULT NULL,
-    last_name varchar(50) DEFAULT NULL,
-    dob date DEFAULT NULL,
-    email varchar(50) DEFAULT NULL,
+    employee_id  bigserial NOT NULL,
+    first_name   varchar(50) DEFAULT NULL,
+    last_name    varchar(50) DEFAULT NULL,
+    dob          date        DEFAULT NULL,
+    email        varchar(50) DEFAULT NULL,
     phone_number varchar(50) DEFAULT NULL,
-    password varchar(50) DEFAULT NULL,
+    password     varchar(50) DEFAULT NULL,
     PRIMARY KEY (employee_id)
 );

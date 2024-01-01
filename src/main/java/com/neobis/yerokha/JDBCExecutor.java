@@ -7,7 +7,6 @@ import com.neobis.yerokha.entity.beer.Beer;
 import com.neobis.yerokha.entity.beer.Container;
 import com.neobis.yerokha.entity.beer.Style;
 import com.neobis.yerokha.entity.user.Customer;
-import com.neobis.yerokha.entity.user.Employee;
 import com.neobis.yerokha.entity.user.User;
 
 import java.math.BigDecimal;
@@ -28,14 +27,16 @@ public class JDBCExecutor {
 
 //            createBeer(beerDAO);
 //            readBeerById(beerDAO);
-//            readAllBear(beerDAO);
+//            readAllBeer(beerDAO);
 //            updateBeerById(beerDAO);
 //            deleteBeerById(beerDAO);
 
-//            createCustomer(userDAO);
-            readCustomerById(customerDAO);
+//            createCustomer(customerDAO);
+//            readCustomerById(customerDAO);
+//            realAllCustomers(customerDAO);
+//            updateCustomerById(customerDAO);
+//            deleteCustomerById(customerDAO);
 
-//            createEmployee(userDAO);
 
             connection.close();
         } catch (SQLException e) {
@@ -44,34 +45,52 @@ public class JDBCExecutor {
         }
     }
 
+    private static void deleteCustomerById(CustomerDAO customerDAO) {
+        long id = 1;
+        int rowsDeleted = customerDAO.deleteById(id);
+        System.out.println("Rows deleted: " + rowsDeleted);
+    }
+
+    private static void updateCustomerById(CustomerDAO customerDAO) {
+        long id = 1;
+        User customer;
+
+        customer = customerDAO.findById(id);
+        System.out.println(customer);
+
+        customer.setFirstName("Aqniyet");
+        customer.setLastName("Boranbayeva");
+        customer.setEmail("b.aqniyet@mail.ru");
+
+        int rowsAffected = customerDAO.update(customer);
+        customer = customerDAO.findById(id);
+        System.out.println("Rows affected: " + rowsAffected);
+        System.out.println(customer);
+    }
+
+    private static void realAllCustomers(CustomerDAO customerDAO) {
+        List<User> customers;
+
+        customers = customerDAO.findAll();
+
+        customers.forEach(System.out::println);
+    }
+
     private static void readCustomerById(CustomerDAO customerDAO) {
         long id = 1;
         User customer = customerDAO.findById(id);
         System.out.println(customer);
     }
 
-    private static void createEmployee(CustomerDAO customerDAO) {
-        User employee = new Employee();
-
-        employee.setFirstName("Arman");
-        employee.setLastName("Khassenov");
-        employee.setBirthDate(Date.valueOf("1999-02-02"));
-        employee.setEmail("a.khassenov@mail.ru");
-        employee.setPhoneNumber("+7 (777) 333-44-55");
-        employee.setPassword("nobody-knows");
-
-        customerDAO.create(employee);
-    }
-
     private static void createCustomer(CustomerDAO customerDAO) {
         User customer = new Customer();
 
-        customer.setFirstName("Bolat");
-        customer.setLastName("Askarov");
-        customer.setBirthDate(Date.valueOf("1970-01-01"));
-        customer.setEmail("b.askarov@mail.ru");
-        customer.setPhoneNumber("+7 (701) 123-45-67");
-        customer.setPassword("top-secret");
+        customer.setFirstName("Rakhat");
+        customer.setLastName("Sabanchiyev");
+        customer.setBirthDate(Date.valueOf("1993-03-03"));
+        customer.setEmail("s.rakhat@mail.ru");
+        customer.setPhoneNumber("+7 (702) 391-09-56");
+        customer.setPassword("tell-no-one");
 
         customerDAO.create(customer);
     }
@@ -83,17 +102,19 @@ public class JDBCExecutor {
     }
 
     private static void updateBeerById(BeerDAO beerDAO) {
-        long id = 1;
+        long id = 3;
         Beer beer = beerDAO.findById(id);
         System.out.println(beer.getName() + " " + beer.getAlcohol() + " " + beer.getCountry());
-        beer.setName("Guinness");
-        beer.setAlcohol(4.2);
-        beer.setCountry("Ireland");
-        beer = beerDAO.update(beer);
+        beer.setName("Jack");
+        beer.setAlcohol(5.4);
+        beer.setCountry("Mexico");
+        int rowsAffected = beerDAO.update(beer);
+        beer = beerDAO.findById(id);
+        System.out.println("Rows affected: " + rowsAffected);
         System.out.println(beer.getName() + " " + beer.getAlcohol() + " " + beer.getCountry());
     }
 
-    private static void readAllBear(BeerDAO beerDAO) {
+    private static void readAllBeer(BeerDAO beerDAO) {
         List<Beer> beerList = beerDAO.findAll();
         beerList.forEach(System.out::println);
 

@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.neobis.yerokha.util.BeerDtoConverter.dtoToStatement;
@@ -43,32 +42,32 @@ public class BeerDAO extends DataAccessObject<Beer> {
     @Override
     public void create(Beer dto) {
         try {
-            connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(INSERT);) {
+            this.connection.setAutoCommit(false);
+            try (PreparedStatement statement = this.connection.prepareStatement(INSERT)) {
                 dtoToStatement(dto, statement);
                 statement.executeUpdate();
-                connection.commit();
+                this.connection.commit();
             } catch (SQLException sqlEx) {
                 try {
-                    connection.rollback();
+                    this.connection.rollback();
                 } catch (SQLException rbEx) {
                     rbEx.printStackTrace();
-                    throw new RuntimeException("Unable to rollback");
+                    throw new RuntimeException("Rollback exception");
                 }
                 sqlEx.printStackTrace();
                 throw new RuntimeException("Unable to create the object");
-            } finally {
-                connection.close();
             }
         } catch (SQLException conEx) {
+            conEx.printStackTrace();
             throw new RuntimeException("Connection exception");
         }
     }
 
+
     @Override
     public Beer findById(Long id) {
         Beer beer = null;
-        try (PreparedStatement statement = connection.prepareStatement(GET_ONE);) {
+        try (PreparedStatement statement = this.connection.prepareStatement(GET_ONE)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -78,12 +77,6 @@ public class BeerDAO extends DataAccessObject<Beer> {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find the object");
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException conEx) {
-                log.log(Level.SEVERE, "Unable to close connection", conEx);
-            }
         }
         return beer;
     }
@@ -91,7 +84,7 @@ public class BeerDAO extends DataAccessObject<Beer> {
     @Override
     public List<Beer> findAll() {
         List<Beer> beerList = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(GET_ALL);) {
+        try (PreparedStatement statement = this.connection.prepareStatement(GET_ALL)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Beer beer = new Beer();
@@ -101,47 +94,36 @@ public class BeerDAO extends DataAccessObject<Beer> {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find the object");
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException conEx) {
-                log.log(Level.SEVERE, "Unable to close connection", conEx);
-            }
         }
         return beerList;
     }
 
     @Override
-    public Beer update(Beer dto) {
-        Beer beer;
+    public int update(Beer dto) {
         int rowsAffected;
         try {
             this.connection.setAutoCommit(false);
-            try (PreparedStatement statement = this.connection.prepareStatement(UPDATE);) {
+            try (PreparedStatement statement = this.connection.prepareStatement(UPDATE)) {
                 dtoToStatement(dto, statement);
                 statement.setLong(9, dto.getId());
                 rowsAffected = statement.executeUpdate();
                 this.connection.commit();
-                beer = this.findById(dto.getId());
             } catch (SQLException sqlEx) {
                 try {
                     this.connection.rollback();
                 } catch (SQLException rbEx) {
                     rbEx.printStackTrace();
-                    throw new RuntimeException(rbEx);
+                    throw new RuntimeException("Rollback exception");
                 }
                 sqlEx.printStackTrace();
-                throw new RuntimeException(sqlEx);
-            } finally {
-                connection.close();
+                throw new RuntimeException("Unable to update beer");
             }
         } catch (SQLException conEx) {
             conEx.printStackTrace();
             throw new RuntimeException("Connection exception");
         }
-        System.out.println("Rows affected: " + rowsAffected);
 
-        return beer;
+        return rowsAffected;
     }
 
 
@@ -150,7 +132,7 @@ public class BeerDAO extends DataAccessObject<Beer> {
         int rowsAffected;
         try {
             this.connection.setAutoCommit(false);
-            try (PreparedStatement statement = this.connection.prepareStatement(DELETE);) {
+            try (PreparedStatement statement = this.connection.prepareStatement(DELETE)) {
                 statement.setLong(1, id);
                 rowsAffected = statement.executeUpdate();
                 this.connection.commit();
@@ -159,12 +141,10 @@ public class BeerDAO extends DataAccessObject<Beer> {
                     this.connection.rollback();
                 } catch (SQLException rbEx) {
                     rbEx.printStackTrace();
-                    throw new RuntimeException(rbEx);
+                    throw new RuntimeException("Rollback exception");
                 }
                 sqlEx.printStackTrace();
-                throw new RuntimeException(sqlEx);
-            } finally {
-                connection.close();
+                throw new RuntimeException("Unable to delete beer");
             }
         } catch (SQLException conEx) {
             conEx.printStackTrace();
