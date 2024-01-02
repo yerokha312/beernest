@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.neobis.yerokha.util.UserDtoConverter.dtoToStatement;
 import static com.neobis.yerokha.util.UserDtoConverter.resultSetToDto;
@@ -29,7 +28,6 @@ public class CustomerDAO extends DataAccessObject<User> {
 
     private static final String GET_ONE_EMPLOYEE = ("SELECT first_name, last_name, dob, email, phone_number, password " +
             "FROM employee WHERE employee_id=?");
-    private static final Logger log = Logger.getLogger(CustomerDAO.class.getName());
     private static final String DELETE = "DELETE FROM customer WHERE customer_id=?";
 
 
@@ -71,6 +69,7 @@ public class CustomerDAO extends DataAccessObject<User> {
                 user = new Customer();
                 resultSetToDto(resultSet, user);
             }
+            resultSet.close();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find object");
@@ -88,6 +87,7 @@ public class CustomerDAO extends DataAccessObject<User> {
                 resultSetToDto(resultSet, user);
                 users.add(user);
             }
+            resultSet.close();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find customers");

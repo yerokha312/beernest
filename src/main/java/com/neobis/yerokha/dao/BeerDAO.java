@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.neobis.yerokha.util.BeerDtoConverter.dtoToStatement;
 import static com.neobis.yerokha.util.BeerDtoConverter.resultSetToDto;
@@ -32,8 +31,6 @@ public class BeerDAO extends DataAccessObject<Beer> {
     private static final String UPDATE = "UPDATE beer SET name=?, style_id=?, alcohol=?, container_id=?, size=?, " +
             "purchase_price=?, country=?, stock_available=? WHERE beer_id=?";
     private static final String DELETE = "DELETE FROM beer WHERE beer_id=?";
-
-    private static final Logger log = Logger.getLogger(BeerDAO.class.getName());
 
     public BeerDAO(Connection connection) {
         super(connection);
@@ -74,6 +71,7 @@ public class BeerDAO extends DataAccessObject<Beer> {
                 beer = new Beer();
                 resultSetToDto(resultSet, beer);
             }
+            resultSet.close();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find the object");
@@ -91,6 +89,7 @@ public class BeerDAO extends DataAccessObject<Beer> {
                 resultSetToDto(resultSet, beer);
                 beerList.add(beer);
             }
+            resultSet.close();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             throw new RuntimeException("Unable to find the object");

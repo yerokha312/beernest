@@ -22,6 +22,7 @@ public class JDBCExecutor {
 
         try {
             Connection connection = dcm.getConnection();
+
             BeerDAO beerDAO = new BeerDAO(connection);
             CustomerDAO customerDAO = new CustomerDAO(connection);
 
@@ -48,6 +49,7 @@ public class JDBCExecutor {
     private static void deleteCustomerById(CustomerDAO customerDAO) {
         long id = 1;
         int rowsDeleted = customerDAO.deleteById(id);
+
         System.out.println("Rows deleted: " + rowsDeleted);
     }
 
@@ -63,7 +65,9 @@ public class JDBCExecutor {
         customer.setEmail("b.aqniyet@mail.ru");
 
         int rowsAffected = customerDAO.update(customer);
+
         customer = customerDAO.findById(id);
+
         System.out.println("Rows affected: " + rowsAffected);
         System.out.println(customer);
     }
@@ -78,7 +82,9 @@ public class JDBCExecutor {
 
     private static void readCustomerById(CustomerDAO customerDAO) {
         long id = 1;
+
         User customer = customerDAO.findById(id);
+
         System.out.println(customer);
     }
 
@@ -97,25 +103,34 @@ public class JDBCExecutor {
 
     private static void deleteBeerById(BeerDAO beerDAO) {
         long id = 1;
+
         int rowsDeleted = beerDAO.deleteById(id);
+
         System.out.println("Rows deleted: " + rowsDeleted);
     }
 
     private static void updateBeerById(BeerDAO beerDAO) {
         long id = 3;
+
         Beer beer = beerDAO.findById(id);
+
         System.out.println(beer.getName() + " " + beer.getAlcohol() + " " + beer.getCountry());
+
         beer.setName("Jack");
         beer.setAlcohol(5.4);
         beer.setCountry("Mexico");
+
         int rowsAffected = beerDAO.update(beer);
+
         beer = beerDAO.findById(id);
+
         System.out.println("Rows affected: " + rowsAffected);
         System.out.println(beer.getName() + " " + beer.getAlcohol() + " " + beer.getCountry());
     }
 
     private static void readAllBeer(BeerDAO beerDAO) {
         List<Beer> beerList = beerDAO.findAll();
+
         beerList.forEach(System.out::println);
 
     }
@@ -124,11 +139,13 @@ public class JDBCExecutor {
         long id = 2;
 
         Beer beer = beerDAO.findById(id);
+
         System.out.println(beer);
     }
 
     private static void createBeer(BeerDAO beerDAO) {
         Beer beer = new Beer();
+
         beer.setName("Corona");
         beer.setStyle(Style.LAGER);
         beer.setAlcohol(4.6);
