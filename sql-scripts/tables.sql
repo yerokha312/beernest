@@ -51,15 +51,3 @@ CREATE TABLE customer
     password     varchar(50) DEFAULT NULL,
     PRIMARY KEY (customer_id)
 );
-
-CREATE TABLE employee
-(
-    employee_id  bigserial NOT NULL,
-    first_name   varchar(50) DEFAULT NULL,
-    last_name    varchar(50) DEFAULT NULL,
-    dob          date        DEFAULT NULL,
-    email        varchar(50) DEFAULT NULL,
-    phone_number varchar(50) DEFAULT NULL,
-    password     varchar(50) DEFAULT NULL,
-    PRIMARY KEY (employee_id)
-);

@@ -26,8 +26,6 @@ public class CustomerDAO extends DataAccessObject<User> {
             "email=?, phone_number=?, password=? " +
             "WHERE customer_id=?";
 
-    private static final String GET_ONE_EMPLOYEE = ("SELECT first_name, last_name, dob, email, phone_number, password " +
-            "FROM employee WHERE employee_id=?");
     private static final String DELETE = "DELETE FROM customer WHERE customer_id=?";
 
 

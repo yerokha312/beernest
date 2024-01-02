@@ -20,8 +20,7 @@ public class JDBCExecutor {
         DatabaseConnectionManager dcm = new DatabaseConnectionManager(
                 "localhost", "beernestdb", "postgres", "password");
 
-        try {
-            Connection connection = dcm.getConnection();
+        try (Connection connection = dcm.getConnection()) {
 
             BeerDAO beerDAO = new BeerDAO(connection);
             CustomerDAO customerDAO = new CustomerDAO(connection);
@@ -39,7 +38,6 @@ public class JDBCExecutor {
 //            deleteCustomerById(customerDAO);
 
 
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Unable to establish connection");

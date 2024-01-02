@@ -1,0 +1,12 @@
+Test Project
+
+    - Clone project. Install postgres.
+    - Create database using script 'createdb.sql'. Use new created database and run the second script 'tables.sql' (all
+        scripts in 'sql-scripts' root folder.
+    - 'container' and 'styles' tables have predefined series of values that should not be extended.
+    - Add postgresql dependency to Maven or Gradle. Add property for Java version 21.
+    - Connection gets from DatabaseConnectionManager.class by passing credentials
+    - 'dao' package contains DAO classes, that describe all database manipulation processing.
+    - 'util' package has DTO converters to escape boilerplate code in DAO classes.
+    - JDBCExecutor has all CRUD methods described.
+    - Test all methods (Create, Read, Update, Delete) and verify results using terminal or DB GUI app.
