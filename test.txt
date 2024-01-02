@@ -1,8 +1,8 @@
 Test Project
 
     - Clone project. Install postgres.
-    - Create database using script 'createdb.sql'. Use new created database and run the second script 'tables.sql' (all
-        scripts in 'sql-scripts' root folder.
+    - Create database using script 'create.sql'. Use new created database and run the second script 'schema.sql' (all
+        scripts in 'src/main/resources' folder.
     - 'container' and 'styles' tables have predefined series of values that should not be extended.
     - Add postgresql dependency to Maven or Gradle. Add property for Java version 21.
     - Connection gets from DatabaseConnectionManager.class by passing credentials
